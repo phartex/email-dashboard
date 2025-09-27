@@ -26,7 +26,7 @@ export const HabariSuperAdminService = {
             //     }
             // }
         } catch (error) {
-            console.error("Verification failed:", error);
+            console.error("registration failed:", error);
             throw error;
         }
     },

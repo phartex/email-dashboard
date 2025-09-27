@@ -1,3 +1,4 @@
+import { HabariSuperAdminService } from "./HabariSuperAdminService";
 
 const activeRequests = new Map();
 
@@ -5,10 +6,10 @@ const HabariSuperAuthService = {
 
   
 
-    // fetchRoles: async () => {
-    //     const rawData = await BackOfficeSuperAdminService.getRoles();
-    //     return rawData.data;
-    // },
+    registerUser: async (payload:any) => {
+        const rawData = await HabariSuperAdminService.register(payload);
+        return rawData.data;
+    },
 
 
 
