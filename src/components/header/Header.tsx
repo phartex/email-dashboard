@@ -14,6 +14,7 @@ const Header = () => {
   } = useUIStore((state) => state);
 
   const { authenticatedUser } = useAuthStore((state) => state);
+  console.log("Authenticated User:", authenticatedUser);
   
 
   const pathname = usePathname();
@@ -22,7 +23,8 @@ const Header = () => {
     computeSelectedMenuItemFromRoute(pathname);
   }, [pathname, computeSelectedMenuItemFromRoute]);
 
-  const avatarInitials =`${authenticatedUser?.user.firstName?.[0] ?? ""}${authenticatedUser?.user.lastName?.[0] ?? ""}`.toUpperCase();
+  // const avatarInitials =`${authenticatedUser?.user.firstName?.[0] ?? ""}${authenticatedUser?.user.lastName?.[0] ?? ""}`.toUpperCase();
+  const avatarInitials =`test`.toUpperCase();
 
   return (
     <header className="fixed left-0 right-0 top-0 z-20 flex h-20 items-center bg-white border-b border-b-gray-300  opacity-100 md:left-[300px]">
@@ -47,12 +49,12 @@ const Header = () => {
               </AvatarFallback>
             </Avatar>
             <div>
-              <h6 className="text-primary-text">
+              {/* <h6 className="text-primary-text">
                 Hi, {authenticatedUser?.user.firstName}
               </h6>
               <p className="hidden md:block text-[#5F738C]">
                 {authenticatedUser?.user.email}
-              </p>
+              </p> */}
             </div>
             <ChevronRight className="ml-10 h-6 w-6" />
           </div>

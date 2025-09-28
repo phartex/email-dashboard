@@ -61,7 +61,7 @@ export default function LoginForm() {
 
   setAuthUser(authData);
   toast.success("Login Successful");
-  router.push("/dashboard");
+  router.push("/marketing");
 },
     onError: (error: any) => {
       const errorMessage = error.response?.data?.error || "Login faileddfg";
