@@ -5,10 +5,10 @@ import {
     useState,
     ReactNode,
   } from "react";
-  import fetchRuntimeConfig from "@/app/api/config";
+  import fetchRuntimeConfig from "@/config";
    
   type ConfigType = {
-    NEXT_PUBLIC_API_BASE_URL: string;
+    TRANSPORT_SWITCH_END_POINT: string;
   } | null;
    
   const ConfigContext = createContext<ConfigType>(null);

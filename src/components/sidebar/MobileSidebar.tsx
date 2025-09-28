@@ -1,6 +1,5 @@
 "use client";
 
-import MainLogo from "@/assets/images/main-logo.png";
 
 import { useUIStore } from "@/store/ui";
 import { CircleX } from "lucide-react";
@@ -29,7 +28,7 @@ const MobileSidebar: React.FC = () => {
         className="absolute right-4 top-4 h-5 w-5 text-gray-400"
       />
       <div className="mb-12 flex items-center justify-center">
-        <Image src={MainLogo} alt="logo" className="h-[1.375rem] w-[5rem]" />
+        {/* <Image src={MainLogo} alt="logo" className="h-[1.375rem] w-[5rem]" /> */}
       </div>
 
       <Menu />

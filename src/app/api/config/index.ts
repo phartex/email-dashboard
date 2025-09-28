@@ -1,5 +1,5 @@
 interface ConfigData {
-  NEXT_PUBLIC_BACK_OFFICE_BASE_URL: string;
+  NEXT_PUBLIC_API_BASE_URL: string;
 }
  
  
@@ -8,7 +8,7 @@ const fetchRuntimeConfig = async (): Promise<ConfigData> => {
  
   if (typeof window === "undefined") {
     // On the server, use an absolute URL provided via an environment variable.
-    const baseUrl = process.env.NEXT_PUBLIC_BACK_OFFICE_BASE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     if (!baseUrl) {
       if (process.env.NODE_ENV === "production") {
         throw new Error("NEXT_PUBLIC_BASE_URL must be set in production");
@@ -32,12 +32,12 @@ const fetchRuntimeConfig = async (): Promise<ConfigData> => {
  
   const data: ConfigData = await response.json();
  
-  if (!data.NEXT_PUBLIC_BACK_OFFICE_BASE_URL) {
-    throw new Error("NEXT_PUBLIC_BACK_OFFICE_BASE_URL is missing from the configuration.");
+  if (!data.NEXT_PUBLIC_API_BASE_URL) {
+    throw new Error("NEXT_PUBLIC_API_BASE_URL is missing from the configuration.");
   }
  
   return {
-    NEXT_PUBLIC_BACK_OFFICE_BASE_URL: data.NEXT_PUBLIC_BACK_OFFICE_BASE_URL || ""
+    NEXT_PUBLIC_API_BASE_URL: data.NEXT_PUBLIC_API_BASE_URL || ""
   };
 };
  

@@ -4,7 +4,6 @@ import { useAuthStore } from "@/store/auth";
 import Header from "@/components/header/Header";
 import MobileSidebar from "@/components/sidebar/MobileSidebar";
 import { useEffect } from "react";
-import SuccessModal from "@/components/success/request-success";
 import FullPageLoader from "@/components/loader";
 import { useUIStore } from "@/store/ui";
 import Sidebar from "@/components/sidebar/Sidebar";
@@ -49,7 +48,7 @@ export default function ProtectedLayout({ children }: ProtectedLayoutProps) {
           {children}
         </main>
       </div>
-      <SuccessModal />
+  
     </div>
   );
 }

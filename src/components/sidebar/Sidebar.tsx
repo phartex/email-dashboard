@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import MainLogo from "@/assets/images/main-logo.png";
+// import MainLogo from "@/assets/images/main-logo.png";
 import { Menu } from "./menu/Menu";
 import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ const Sidebar = () => {
     return (
         <aside className="fixed top-0 hidden h-screen w-[300px] flex-col border-r border-r-gray-300 bg-primary md:flex">
             <div className="flex h-20 items-center justify-start border-b border-r border-b-gray-300 border-r-gray-300 px-6">
-                <Image src={MainLogo} alt="logo" width={147} height={36} />
+                {/* <Image src={MainLogo} alt="logo" width={147} height={36} /> */}
             </div>
 
             <Menu />

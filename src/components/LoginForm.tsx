@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLoading } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,6 +21,7 @@ import { useMutation } from "@tanstack/react-query";
 import apiClient from "@/lib/apiClient";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import HabariSuperAuthService from "@/services/HabariSuperAuthService";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Email must be valid" }),
@@ -42,33 +43,28 @@ export default function LoginForm() {
 
   const authenticateUser = useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
-      const res = await apiClient.post("/api/auth/login", data);
+      const res = await HabariSuperAuthService.login(data);
       return res.data;
     },
-    onSuccess: (response) => {
-      console.log("Login response:", response);
+   onSuccess: (response) => {
+  console.log("Login response:", response);
 
-      if (!response.success) {
-        toast.error("Invalid login response");
-        return;
-      }
+  const { user, token } = response; 
 
-      const { user, token } = response.data;
+  const authData = {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+    token,
+  };
 
-      const authData = {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-        token, // Bearer token for API calls
-      };
-
-      setAuthUser(authData);
-      toast.success("Login Successful");
-      router.push("/dashboard");
-    },
+  setAuthUser(authData);
+  toast.success("Login Successful");
+  router.push("/dashboard");
+},
     onError: (error: any) => {
-      const errorMessage = error.response?.data?.error || "Login failed";
+      const errorMessage = error.response?.data?.error || "Login faileddfg";
       toast.error(errorMessage);
     },
   });
@@ -138,6 +134,7 @@ export default function LoginForm() {
         </div>
 
       <Button type="submit" className="w-full bg-green-700" disabled={authenticateUser.isPending}>
+          {authenticateUser.isPending && <ButtonLoading className="h-4 w-4 animate-spin mr-2" />}
           {authenticateUser.isPending ? "Logging in..." : "Log In"}
         </Button>
       </form>

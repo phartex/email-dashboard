@@ -1,5 +1,6 @@
 
 
 export const emailServiceUrls   = {
-    register: "/api/auth/login",
+    register: "/api/auth/register",
+    login: "/api/auth/login",
 };
