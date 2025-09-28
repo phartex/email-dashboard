@@ -21,14 +21,15 @@ const MobileSidebar: React.FC = () => {
     <div
      
       ref={ref}
-      className="fixed z-30 flex h-screen w-64 flex-col pt-16 shadow-lg md:hidden bg-primary"
+      className="fixed z-30 flex bg-white h-screen w-64 flex-col pt-16 shadow-lg md:hidden "
     >
       <CircleX
         onClick={handleToggleClick}
         className="absolute right-4 top-4 h-5 w-5 text-gray-400"
       />
-      <div className="mb-12 flex items-center justify-center">
-        {/* <Image src={MainLogo} alt="logo" className="h-[1.375rem] w-[5rem]" /> */}
+      <div className=" flex items-center pl-4">
+        <Image src="/rutal-logo.png" alt="logo" width={147} height={36} />
+        
       </div>
 
       <Menu />
