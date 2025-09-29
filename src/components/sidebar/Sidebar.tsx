@@ -1,6 +1,7 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
-import MainLogo from "@/assets/images/main-logo.png";
 import { Menu } from "./menu/Menu";
 import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
@@ -8,41 +9,43 @@ import Cookies from "js-cookie";
 import { PowerIcon } from "lucide-react";
 
 const Sidebar = () => {
-    const { clearAuthUser } = useAuthStore((state) => state); // Access Zustand store to clear auth user
-    const router = useRouter();
+  const { clearAuthUser } = useAuthStore((state) => state); 
+  const router = useRouter();
 
-    // Function to handle logout
-    const handleLogout = () => {
-        // Clear authentication data in Zustand store
-        clearAuthUser();
+  // ✅ Handle logout
+  const handleLogout = () => {
+    // Clear Zustand state
+    clearAuthUser();
 
-        // Clear auth cookies
-        Cookies.remove("authUser");
+    // Remove auth cookie
+    Cookies.remove("authUser");
 
-        // Redirect user to the login page
-        router.push("/");
-    };
+    // Redirect to login
+    router.push("/login"); // <-- Better to send them to /login, not just "/"
+  };
 
-    return (
-        <aside className="fixed top-0 hidden h-screen w-[300px] flex-col border-r border-r-gray-300 bg-[#f5f5f5] md:flex">
-            <div className="flex h-20 items-center justify-start border-b border-r border-b-gray-300 border-r-gray-300 px-6">
-                <Image src="/rutal-logo.png" alt="logo" width={147} height={36} />
-            </div>
+  return (
+    <aside className="fixed top-0 hidden h-screen w-[300px] flex-col border-r border-black bg-[#f5f5f5] md:flex">
+      {/* Logo */}
+      <div className="flex h-20 items-center justify-start border-b border-gray-300 px-6">
+        <Image src="/rutal-logo.png" alt="logo" width={147} height={36} />
+      </div>
 
-            <Menu />
+      {/* Menu Items */}
+      <Menu />
 
-            <div className="flex flex-1 flex-col">
-                <button
-                    className={`hover:text-primary-default mx-auto mb-12 mt-auto flex h-[2.5rem] w-[223px] cursor-pointer items-center gap-[0.875rem] pl-3 text-sm font-semibold text-red-400 hover:font-bold`}
-                    onClick={handleLogout}
-                >
-                    <PowerIcon className="h-6 w-6 -rotate-90" strokeWidth={3} />
-                     {/* <Image src={MainLogo} alt="logo" width={147} height={36} /> */}
-                    <span className="text-white font-light text-lg">Log Out</span>
-                </button>
-            </div>
-        </aside>
-    );
+      {/* Logout Button */}
+      <div className="flex flex-1 flex-col">
+        <button
+          onClick={handleLogout}
+          className="mx-auto mb-12 mt-auto flex h-[2.5rem] w-[223px] items-center gap-3 rounded-md border border-red-300 px-3 text-sm font-semibold text-red-500 hover:bg-red-50 hover:font-bold transition"
+        >
+          <PowerIcon className="h-6 w-6 -rotate-90" strokeWidth={2.5} />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+  );
 };
 
 export default Sidebar;

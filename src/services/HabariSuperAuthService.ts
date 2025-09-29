@@ -12,7 +12,7 @@ const HabariSuperAuthService = {
     },
     login: async (payload:any) => {
         const rawData = await HabariSuperAdminService.login(payload);
-        console.log("Raw login data:", rawData);
+       
         return rawData;
     },
 

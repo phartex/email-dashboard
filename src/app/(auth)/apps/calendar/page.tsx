@@ -1,9 +1,12 @@
 import React from 'react'
+import CenteredPage from '../../CenteredPage/CenterPage'
 
 const CalendarPage = () => {
   return (
     <div>
-      calendar
+       <CenteredPage>
+      <h1 className="text-2xl font-bold">Calendar</h1>
+    </CenteredPage>
     </div>
   )
 }

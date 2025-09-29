@@ -29,7 +29,7 @@ const Header = () => {
   const avatarInitials = ``.toUpperCase();
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-20 flex h-16 items-center bg-white border-b border-gray-200 md:left-[300px] px-4">
+    <header className="fixed left-0 right-0 top-0 z-20 flex h-20 items-center bg-white border-b border-black md:left-[300px] px-4">
       {/* Left section */}
       <div className="flex items-center gap-3">
         {/* Mobile Hamburger */}
@@ -58,17 +58,17 @@ const Header = () => {
       {/* Right section */}
       <div className="ml-auto flex items-center gap-3 sm:gap-4">
         {/* Settings */}
-        <button className="relative w-9 h-9 flex items-center justify-center border rounded-full hover:bg-gray-100">
+        <button className="relative w-9 h-9 flex items-center justify-center border border-black rounded-full hover:bg-gray-100">
           <Settings size={18} />
         </button>
 
         {/* Apps */}
-        <button className="relative w-9 h-9 flex items-center justify-center border rounded-full hover:bg-gray-100">
+        <button className="relative w-9 h-9 flex items-center justify-center border border-black rounded-full hover:bg-gray-100">
           <LayoutGrid size={18} />
         </button>
 
         {/* Messages */}
-        <button className="relative w-9 h-9 flex items-center justify-center border rounded-full hover:bg-gray-100">
+        <button className="relative w-9 h-9 flex items-center justify-center border border-black rounded-full hover:bg-gray-100">
           <Mail size={18} />
           {unreadMessages > 0 && (
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -78,7 +78,7 @@ const Header = () => {
         </button>
 
         {/* Notifications */}
-        <button className="relative w-9 h-9 flex items-center justify-center border rounded-full hover:bg-gray-100">
+        <button className="relative w-9 h-9 flex items-center justify-center border border-black rounded-full hover:bg-gray-100">
           <Bell size={18} />
           {notifications > 0 && (
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">

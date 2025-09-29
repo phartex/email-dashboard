@@ -41,7 +41,7 @@ export function Menu() {
 };
 
   return (
-    <div className="space-y-8 p-4">
+    <div className="space-y-2 md:space-y-8 p-4">
       {menus.map((menu) => {
         const isActive = pathname.startsWith(menu.route);
 
@@ -53,7 +53,7 @@ export function Menu() {
                   toggleMenu(menu.label);
                   handleMenuClick(menu.label, "/apps/calendar");
                 }}
-                className={`flex items-center justify-between rounded-md px-4 py-3 text-xl cursor-pointer font-semibold ${
+                className={`flex items-center justify-between rounded-md px-4 py-3 md:text-xl cursor-pointer font-semibold ${
                   isActive
                      ? "border border-2 border-black font-semibold text-primary-text py-3"
                 : "text-black hover:bg-gray-100 "
@@ -83,7 +83,7 @@ export function Menu() {
       <p
         key={option}
         onClick={() => handleAppSelection(option)}
-        className="text-black text-xl font-semibold cursor-pointer"
+        className="text-black md:text-xl font-semibold cursor-pointer"
       >
         {option}
       </p>
@@ -100,7 +100,7 @@ export function Menu() {
           <div
             key={menu.label}
             onClick={() => handleMenuClick(menu.label, menu.route)}
-            className={`flex items-center rounded-md px-4 text-xl font-semibold cursor-pointer ${
+            className={`flex items-center rounded-md px-4 md:text-xl font-semibold cursor-pointer ${
               isActive
                 ? "border border-2 border-black font-semibold text-primary-text py-3"
                 : "text-black hover:bg-gray-100 hover:text-primary-text hover:font-semibold"
