@@ -47,13 +47,13 @@ export const sideNavMenus: Menu[] = [
     route: "/hrm",
   },
   {
-    label: "Mobile App",
+    label: "MobileApp",
     icon: {
       active: "/icons/mobile-app-active.svg",
       inactive: "/icons/mobile-app.svg",
     },
     collapsible: false,
-    route: "/mobile-app",
+    route: "/mobileapp",
   },
   {
     label: "Landingpage",
