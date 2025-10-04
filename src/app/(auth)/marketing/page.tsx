@@ -71,8 +71,8 @@ const MarketingPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Marketing</h1>
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 pb-5 md:pb-0">Marketing</h1>
         <div className="flex gap-2 bg-white rounded-lg p-1 shadow-sm border border-black">
           <button
             onClick={() => setTimeFilter('7days')}
