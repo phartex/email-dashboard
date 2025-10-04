@@ -64,7 +64,8 @@ export default function LoginForm() {
   router.push("/marketing");
 },
     onError: (error: any) => {
-      const errorMessage = error.response?.data?.error || "Login faileddfg";
+      console.log(error)
+      const errorMessage = error.response?.data?.error || "Login failed";
       toast.error(errorMessage);
     },
   });

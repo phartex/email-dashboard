@@ -271,7 +271,7 @@ const MarketingPage = () => {
                   <g key={i}>
                     <rect x={x} y={200 - height1} width="50" height={height1} fill="#86EFAC" />
                     <rect x={x} y={200 - height1 - height2} width="50" height={height2} fill="#D4F4DD" />
-                    <text x={x + 10} y="218" className="text-xs fill-gray-600">{item.name.replace('March ', '')}</text>
+                    <text x={x + 10} y="218" className="text-xs text-black fill-gray-600">March {item.name.replace('March ', '')}</text>
                   </g>
                 );
               })}

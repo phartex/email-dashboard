@@ -4,7 +4,7 @@ import { useMutation, useQuery, UseQueryOptions } from "@tanstack/react-query";
 export const useEmails = () => {
   return useQuery({
     queryKey: ["emails"],
-    queryFn: () => HabariSuperAdminService.getAll(),
+    queryFn: () => HabariSuperAdminService.getAllEmails(),
   });
 };
 

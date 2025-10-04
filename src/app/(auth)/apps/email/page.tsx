@@ -1,27 +1,36 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo,useEffect } from "react";
 import {
   Mail,
   Star,
-  Trash,
   Edit2,
   Search,
   ChevronLeft,
   ChevronRight,
-  RefreshCcw,
 } from "lucide-react";
 import Image from "next/image";
 import { useEmails } from "@/app/hooks/useBackOffice";
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 10; // 👈 show 10 per page
 
 const EmailPage = () => {
   const { data: emails = [], isLoading } = useEmails();
   const [activeTab, setActiveTab] = useState("Inbox");
   const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
-  // Move useMemo BEFORE the conditional return
-  const filteredEmails = useMemo(() => {
+
+    useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 1000);
+
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
+
+  // Filter emails based on tab
+  const filteredEmailsByTab  = useMemo(() => {
     switch (activeTab) {
       case "Starred":
         return emails.filter((e: any) => e.starred);
@@ -38,6 +47,19 @@ const EmailPage = () => {
     }
   }, [emails, activeTab]);
 
+    const filteredEmails = useMemo(() => {
+    if (!debouncedSearchTerm) return filteredEmailsByTab;
+
+    const lowerSearch = debouncedSearchTerm.toLowerCase();
+    return filteredEmailsByTab.filter(
+      (email: any) =>
+        email.sender?.toLowerCase().includes(lowerSearch) ||
+        email.subject?.toLowerCase().includes(lowerSearch) ||
+        email.preview?.toLowerCase().includes(lowerSearch)
+    );
+  }, [filteredEmailsByTab, debouncedSearchTerm]);
+
+  // Pagination logic
   const totalPages = Math.ceil(filteredEmails.length / PAGE_SIZE);
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const paginatedEmails = filteredEmails.slice(
@@ -45,10 +67,15 @@ const EmailPage = () => {
     startIndex + PAGE_SIZE
   );
 
-  // NOW you can conditionally return AFTER all hooks have been called
-  if (isLoading) {
-    return <p className="p-4">Loading emails...</p>;
-  }
+  // Handle page navigation
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  if (isLoading) return <p className="p-4">Loading emails...</p>;
 
   return (
     <div className="flex h-screen bg-white border border-black rounded-md p-5 mt-7">
@@ -65,7 +92,7 @@ const EmailPage = () => {
           />
           <div>
             <h2 className="font-semibold">Ari Budin</h2>
-            <p className="text-xs text-gray-500">Web developer</p>
+            <p className="text-xs text-gray-500">Web Developer</p>
           </div>
         </div>
 
@@ -92,7 +119,6 @@ const EmailPage = () => {
               >
                 <span className="flex items-center gap-2">
                   {tab === "Inbox" && <Mail className="h-4 w-4" />}
-                  {tab === "Drafts" && "(30)"}
                   {tab}
                 </span>
                 {tab === "Inbox" && (
@@ -123,7 +149,7 @@ const EmailPage = () => {
       <main className="flex-1 flex flex-col">
         {/* Header */}
         <div className="flex flex-col border-b">
-          {/* Row 1: Title + Refresh */}
+          {/* Top Row */}
           <div className="flex items-center justify-between px-4 py-2">
             <h2 className="text-xl font-semibold">{activeTab}</h2>
             <div className="flex items-center border bg-[#f5f5f5] rounded px-2 py-3 w-64">
@@ -131,84 +157,79 @@ const EmailPage = () => {
                 type="text"
                 placeholder="Search..."
                 className="flex-1 outline-none text-sm bg-transparent"
+                  value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <Search className="h-4 w-4 text-gray-500" />
             </div>
           </div>
 
-          {/* Row 2: Select all + Search + Pagination */}
+          {/* Pagination Row */}
           <div className="flex items-center justify-between px-4 py-2">
-            {/* Select All */}
             <div className="flex items-center gap-2">
               <input type="checkbox" />
               <span className="text-sm">Select all</span>
             </div>
 
-            {/* Search + Pagination grouped */}
-            <div className="flex items-center gap-6">
-              {/* Pagination */}
-              <div className="flex items-center gap-3 text-sm text-gray-500">
-                <span>
-                  {startIndex + 1}-
-                  {Math.min(startIndex + PAGE_SIZE, filteredEmails.length)} of{" "}
-                  {filteredEmails.length}
-                </span>
-                <ChevronLeft
-                  color={currentPage === 1 ? "#D1D5DB" : "#000000"}
-                  className={`h-8 w-8 bg-[#f5f5f5] rounded-2xl border border-black ${
-                    currentPage === 1
-                      ? "cursor-not-allowed"
-                      : "cursor-pointer hover:text-blue-600"
-                  }`}
-                  onClick={() =>
-                    currentPage > 1 && setCurrentPage(currentPage - 1)
-                  }
-                />
+            <div className="flex items-center gap-3 text-sm text-gray-500">
+              <span>
+                {filteredEmails.length === 0
+                  ? "0 of 0"
+                  : `${startIndex + 1}-${Math.min(
+                      startIndex + PAGE_SIZE,
+                      filteredEmails.length
+                    )} of ${filteredEmails.length}`}
+              </span>
 
-                <ChevronRight
-                  className={`h-8 w-8 cursor-pointer bg-[#f5f5f5] rounded-2xl border-black border ${
-                    currentPage === totalPages
-                      ? "text-gray-300 cursor-not-allowed"
-                      : "hover:text-black"
-                  }`}
-                  onClick={() =>
-                    currentPage < totalPages && setCurrentPage(currentPage + 1)
-                  }
-                />
-              </div>
+              <ChevronLeft
+                onClick={handlePrevPage}
+                className={`h-8 w-8 rounded-full border border-black bg-[#f5f5f5] ${
+                  currentPage === 1
+                    ? "cursor-not-allowed text-gray-300"
+                    : "cursor-pointer hover:text-black"
+                }`}
+              />
+
+              <ChevronRight
+                onClick={handleNextPage}
+                className={`h-8 w-8 rounded-full border border-black bg-[#f5f5f5] ${
+                  currentPage === totalPages
+                    ? "cursor-not-allowed text-gray-300"
+                    : "cursor-pointer hover:text-black"
+                }`}
+              />
             </div>
           </div>
         </div>
 
         {/* Email List */}
         <div className="flex-1 overflow-y-auto">
-          {paginatedEmails.map((email: any) => (
-            <div
-              key={email.id}
-              className="flex items-center border-b border-black px-4 py-5 hover:bg-gray-50 cursor-pointer"
-            >
-              {/* Checkbox */}
-              <input type="checkbox" className="mr-3" />
-
-              {/* Star */}
-              <Star
-                className={`h-4 w-4 mr-3 cursor-pointer ${
-                  email.starred ? "text-yellow-400" : "text-gray-400"
-                }`}
-              />
-
-              {/* Sender + Subject */}
-              <div className="flex-1">
-                <p className="font-semibold">{email.sender}</p>
-                <p className="text-sm text-gray-600 truncate">
-                  {email.subject} — {email.preview}
-                </p>
+          {paginatedEmails.length === 0 ? (
+            <p className="text-center text-gray-500 mt-10">No emails found.</p>
+          ) : (
+            paginatedEmails.map((email: any) => (
+              <div
+                key={email.id}
+                className="flex items-center border-b border-black px-4 py-5 hover:bg-gray-50 cursor-pointer"
+              >
+                <input type="checkbox" className="mr-3" />
+                <Star
+                  className={`h-4 w-4 mr-3 cursor-pointer ${
+                    email.starred ? "text-yellow-400" : "text-gray-400"
+                  }`}
+                />
+                <div className="flex-1">
+                  <p className="font-semibold">{email.from}</p>
+                  <p className="text-sm text-gray-600 truncate">
+                    {email.subject} — {email.body}
+                  </p>
+                </div>
+                <div className="ml-auto text-sm text-gray-500">
+                  {new Date(email.date).toLocaleDateString()}
+                </div>
               </div>
-
-              {/* Time */}
-              <div className="ml-auto text-sm text-gray-500">{email.time}</div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </main>
     </div>

@@ -27,7 +27,7 @@ const Sidebar = () => {
   return (
     <aside className="fixed top-0 hidden h-screen w-[300px] flex-col border-r border-black bg-[#f5f5f5] md:flex">
       {/* Logo */}
-      <div className="flex h-20 items-center justify-start border-b border-gray-300 px-6">
+      <div className="flex h-20 items-center justify-start border-b border-gray-300 px-6 py-5">
         <Image src="/rutal-logo.png" alt="logo" width={147} height={36} />
       </div>
 
