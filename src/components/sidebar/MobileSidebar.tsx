@@ -52,7 +52,7 @@ const MobileSidebar: React.FC = () => {
 
       <div className="flex h-full flex-col">
         <div
-          className={`mx-auto mb-12 mt-auto flex h-[2.5rem] w-[223px] py-5 justify-center items-center gap-3 rounded-md border border-green-700 px-3 text-sm font-semibold hover:bg-red-50 hover:font-bold transition`}
+          className={`mx-auto mb-40 mt-auto flex h-[2.5rem] w-[223px] py-5 justify-center items-center gap-3 rounded-md border border-green-700 px-3 text-sm font-semibold hover:bg-red-50 hover:font-bold transition`}
           onClick={handleLogout}
         >
         <PowerIcon className="h-6 w-6 -rotate-90 text-green-700" strokeWidth={2.5} />
