@@ -57,36 +57,36 @@ export default function Register() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}
           <div>
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" type="text" placeholder="Enter your full name" {...register("name")} />
+            <Label htmlFor="name" className="py-2">Name</Label>
+            <Input id="name" type="text" placeholder="Enter your full name" {...register("name")}  className="focus:outline-none focus:ring-0 focus:border-none"/>
             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
 
           {/* Email */}
           <div>
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="Enter your email" {...register("email")} />
+            <Label htmlFor="email" className="py-2">Email</Label>
+            <Input id="email" type="email" placeholder="Enter your email" {...register("email")} className="focus:outline-none focus:ring-0 focus:border-none"/>
             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
 
           {/* Password */}
           <div>
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" placeholder="Enter a password" {...register("password")} />
+            <Label htmlFor="password" className="py-2">Password</Label>
+            <Input id="password" type="password" placeholder="Enter a password" {...register("password")} className="focus:outline-none focus:ring-0 focus:border-none"/>
             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
 
           {/* Role */}
           <div>
-            <Label htmlFor="role">Role</Label>
-            <Input id="role" type="text" placeholder="e.g. user / admin" {...register("role")} />
+            <Label htmlFor="role" className="py-2">Role</Label>
+            <Input id="role" type="text" placeholder="e.g. user / admin" {...register("role")} className="focus:outline-none focus:ring-0 focus:border-none"/>
             {errors.role && <p className="text-red-500 text-sm">{errors.role.message}</p>}
           </div>
 
           {/* Submit */}
           <Button
             type="submit"
-            className="w-full mt-4 bg-green-700 text-white py-2"
+            className="w-full mt-4 bg-green-700 text-white py-6 text-xl"
             disabled={registerUser.isPending}
           >
             {registerUser.isPending && <ButtonLoading className="h-4 w-4 animate-spin mr-2" />}

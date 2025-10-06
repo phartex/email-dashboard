@@ -134,7 +134,7 @@ export default function LoginForm() {
           </Link>
         </div>
 
-      <Button type="submit" className="w-full bg-green-700" disabled={authenticateUser.isPending}>
+      <Button type="submit" className="w-full bg-green-700 py-6 text-xl" disabled={authenticateUser.isPending}>
           {authenticateUser.isPending && <ButtonLoading className="h-4 w-4 animate-spin mr-2" />}
           {authenticateUser.isPending ? "Logging in..." : "Log In"}
         </Button>
